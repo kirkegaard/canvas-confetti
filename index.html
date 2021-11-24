@@ -370,6 +370,29 @@
   </div>
 
   <div class="container">
+    <div class="group" data-name="options">
+      <div class="flex-rows">
+        <div class="left">
+          <h2><a href="#basic" id="basic" class="anchor">Options</a></h2>
+          <button class="run">
+            Run
+            <span class="icon">
+              <svg class="icon"><use xlink:href="#run"></use></svg>
+            </span>
+          </button>
+        </div>
+        <div class="description">
+          <p>
+            There is a bunch of options you can set for your confetti! Explore them at <a href="https://github.com/catdad/canvas-confetti#options">options seciton</a> in the readme. You dont need to use them all but you can if you want to...
+          </p>
+          <p>Careful when using emojis as shapes. Its very expensive and render cost quite a lot. Be sure not to render more than 20-30ish as it'll lower performance!</p>
+        </div>
+      </div>
+      <div class="editor"></div>
+    </div>
+  </div>
+
+  <div class="container">
     <div class="group" data-name="random">
       <div class="flex-rows">
         <div class="left">
@@ -586,6 +609,17 @@
           particleCount: 100,
           spread: 70,
           origin: { y: 0.6 }
+        });
+      },
+      options: function cannon() {
+        confetti({
+          particleCount: 25,
+          startVelocity: 30,
+          gravity: -1.2,
+          spread: 180,
+          angle: 270,
+          scalar: 3,
+          shapes: ["🥳", "🎉", "🎊"]
         });
       },
       random: function random() {

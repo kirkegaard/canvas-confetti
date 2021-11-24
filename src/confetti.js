@@ -334,11 +334,20 @@
       context.ellipse ?
         context.ellipse(fetti.x, fetti.y, Math.abs(x2 - x1) * fetti.ovalScalar, Math.abs(y2 - y1) * fetti.ovalScalar, Math.PI / 10 * fetti.wobble, 0, 2 * Math.PI) :
         ellipse(context, fetti.x, fetti.y, Math.abs(x2 - x1) * fetti.ovalScalar, Math.abs(y2 - y1) * fetti.ovalScalar, Math.PI / 10 * fetti.wobble, 0, 2 * Math.PI);
-    } else {
+    } else if (fetti.shape === 'square') {
       context.moveTo(Math.floor(fetti.x), Math.floor(fetti.y));
       context.lineTo(Math.floor(fetti.wobbleX), Math.floor(y1));
       context.lineTo(Math.floor(x2), Math.floor(y2));
       context.lineTo(Math.floor(x1), Math.floor(fetti.wobbleY));
+    } else {
+      // We will assume that anything thats not a circle or square is text.
+      // Please be aware that this is not very performant and will slow down
+      // when rendering more than 20'ish particles
+      context.save();
+      context.translate(fetti.x, fetti.y);
+      context.rotate(fetti.tiltAngle);
+      context.fillText(fetti.shape, 0, 0);
+      context.restore();
     }
 
     context.closePath();
@@ -352,6 +361,11 @@
     var context = canvas.getContext('2d');
     var animationFrame;
     var destroy;
+
+    // This should probably respect the scalar option
+    context.font = '3em Arial';
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
 
     var prom = promise(function (resolve) {
       function onDone() {
