@@ -542,7 +542,6 @@
       }
 
       function onResize() {
-        console.log('resizing...');
         if (worker) {
           // TODO this really shouldn't be immediate, because it is expensive
           var obj = {
