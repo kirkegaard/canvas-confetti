@@ -255,9 +255,11 @@
   }
 
   function setCanvasRectSize(canvas) {
-    var rect = canvas.getBoundingClientRect();
-    canvas.width = rect.width;
-    canvas.height = rect.height;
+    if (typeof canvas.getBoundingClientRect === 'function') {
+      var rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+    }
   }
 
   function getCanvas(zIndex) {
@@ -540,12 +542,15 @@
       }
 
       function onResize() {
+        console.log('resizing...');
         if (worker) {
           // TODO this really shouldn't be immediate, because it is expensive
           var obj = {
             getBoundingClientRect: function () {
               if (!isLibCanvas) {
-                return canvas.getBoundingClientRect();
+                return typeof canvas.getBoundingClientRect === 'function'
+                 ? canvas.getBoundingClientRect()
+                 : null;
               }
             }
           };
